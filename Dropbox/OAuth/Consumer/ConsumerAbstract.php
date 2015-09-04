@@ -51,6 +51,9 @@ abstract class ConsumerAbstract
             } catch(\Dropbox\Exception $e) {
                 $this->getRequestToken();
                 $this->authorise();
+            } catch (\Dropbox\Dropbox_BadRequestException $e) {
+                $this->getRequestToken();
+                $this->authorise();
             }
         }
     }
@@ -135,7 +138,7 @@ abstract class ConsumerAbstract
             if (!$token = $this->storage->get('request_token')) {
                 $token = new \stdClass();
                 $token->oauth_token = null;
-                $token->oauth_token_secret = null;
+                $token->oauth_token_tiosecret = null;
             }
         }
         return $token;
